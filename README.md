@@ -1,0 +1,2 @@
+# bomberCriptoRobot
+firstVersion
