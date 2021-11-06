@@ -15,7 +15,7 @@ def retry(retries, imgAddress, clicker, screen):
         while retries <= 10 and screen.checkExist():
             print("Passo : loop para clicar ", retries)
             time.sleep(.2)
-            if imgAddress != 'work_button.png':
+            if imgAddress != c.imagePath + 'work_button.png':
                 if clicker.executeOnscreen() is not False:
                     break
             else:
