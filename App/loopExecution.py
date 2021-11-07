@@ -7,9 +7,10 @@ from screenEvents import ScreenService
 import time
 import random
 
-imageAddresses = ['App\\play_now.png','App\\connect_wallet.png','App\\metamask_button.png','App\\assinar.png','App\\heroes.png','App\\work_button.png','App\\close_button.png','App\\treasure_hunt.png']
+imageAddresses = ['App\\play_now.png','App\\connect_wallet.png','App\\metamask_button.png','App\\assinar.png','App\\heroes.png','App\\full_stamina_bar.png','App\\close_button.png','App\\treasure_hunt.png']
 errorButtonImage = 'App\\error_ok_modal.png'
 newMapButtonImage = 'App\\new_map_button.png'
+webbrowser.open_new_tab("https://bombcrypto.io/")
 
 def retry(retries, imgAddress, clicker, screen):
     if retries > 10:
@@ -19,7 +20,7 @@ def retry(retries, imgAddress, clicker, screen):
         while retries <= 10 and screen.checkExist():
             print("Passo : loop para clicar ", retries)
             time.sleep(.2)
-            if imgAddress != 'App\\work_button.png':
+            if imgAddress != 'App\\full_stamina_bar.png':
                 if clicker.executeOnscreen() is not False:
                     break
             else:
@@ -45,7 +46,6 @@ def lockRobot(executionLockTimer):
     return False
 
 def loopExecution(executionLockTimer):
-    webbrowser.open_new_tab("https://bombcrypto.io/")
     addSeconds = random.randint(1, 8)
     screen = ScreenService('')
     waitTimer = 5
@@ -93,4 +93,3 @@ def loopExecution(executionLockTimer):
             break
     pyautogui.hotkey('ctrl', 'w')
     loopExecution(executionLockTimer)
-loopExecution(0)
