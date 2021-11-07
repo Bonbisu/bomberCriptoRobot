@@ -1,15 +1,11 @@
-import re
-import sys
 import webbrowser
 import pyautogui
 from mouseEvents import ClickService
 from screenEvents import ScreenService
+import config as c
 import time
 import random
 
-imageAddresses = ['App\\play_now.png','App\\connect_wallet.png','App\\metamask_button.png','App\\assinar.png','App\\heroes.png','App\\work_button.png','App\\close_button.png','App\\treasure_hunt.png']
-errorButtonImage = 'App\\error_ok_modal.png'
-newMapButtonImage = 'App\\new_map_button.png'
 
 def retry(retries, imgAddress, clicker, screen):
     if retries > 10:
@@ -19,7 +15,7 @@ def retry(retries, imgAddress, clicker, screen):
         while retries <= 10 and screen.checkExist():
             print("Passo : loop para clicar ", retries)
             time.sleep(.2)
-            if imgAddress != 'App\\work_button.png':
+            if imgAddress != c.imagePath + 'work_button.png':
                 if clicker.executeOnscreen() is not False:
                     break
             else:
@@ -36,6 +32,7 @@ def retry(retries, imgAddress, clicker, screen):
         return retry(1+retries, imgAddress, clicker, screen)
     return True
 
+
 def lockRobot(executionLockTimer):
     time.sleep(.2)
     if executionLockTimer >= 0 and executionLockTimer <= 7200:
@@ -44,28 +41,31 @@ def lockRobot(executionLockTimer):
     print("Unlocked")
     return False
 
+
 def loopExecution(executionLockTimer):
     webbrowser.open_new_tab("https://bombcrypto.io/")
     addSeconds = random.randint(1, 8)
     screen = ScreenService('')
     waitTimer = 5
-    clicker = ClickService(None,'',15)
+    clicker = ClickService(None, '', 15)
     retries = 0
-    
+
+    print("iniciando")
+
     if screen.checkError() is True:
-        clicker.update(None, errorButtonImage,1)
-        if(retry(retries, newMapButtonImage, clicker, screen)):
-            print("checkError : @img -", errorButtonImage )
+        clicker.update(None, c.errorButtonImage, 1)
+        if(retry(retries, c.newMapButtonImage, clicker, screen)):
+            print("checkError : @img -", c.errorButtonImage)
             executionLockTimer += addSeconds
 
     if screen.checkNewMap(waitTimer) is True:
-        clicker.update(None, newMapButtonImage,1)
-        if(retry(retries, newMapButtonImage, clicker, screen)):
-            print("checkNewMap : @img - OK", newMapButtonImage)
-    
-    for imgAddress in imageAddresses:
+        clicker.update(None, c.newMapButtonImage, 1)
+        if(retry(retries, c.newMapButtonImage, clicker, screen)):
+            print("checkNewMap : @img - OK", c.newMapButtonImage)
+
+    for imgAddress in c.imageAddresses:
         try:
-            clicker.update(None,imgAddress,2)
+            clicker.update(None, imgAddress, 2)
             screen.update(imgAddress)
             loaders = 0
             while screen.checkExist() is not True:
@@ -75,7 +75,7 @@ def loopExecution(executionLockTimer):
                 if loaders > 10:
                     addSeconds = random.randint(60, 300)
                     time.sleep(addSeconds)
-                    pyautogui.hotkey('ctrl', 'w')
+                    pyautogui.hotkey(c.closeTabCmd)
                     loopExecution(executionLockTimer)
             if(retry(retries, imgAddress, clicker, screen) is True):
                 print("Tentativa : @img - OK", imgAddress)
@@ -91,6 +91,8 @@ def loopExecution(executionLockTimer):
         if screen.checkError() is True or screen.checkNewMap(5) is True:
             time.sleep(1)
             break
-    pyautogui.hotkey('ctrl', 'w')
+    pyautogui.hotkey(c.closeTabCmd)
     loopExecution(executionLockTimer)
+
+
 loopExecution(0)
