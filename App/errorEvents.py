@@ -10,8 +10,6 @@ from IService import IService
 ErrorButtons = ['App\\error_ok_modal.png','App\\error_center_modal.png','App\\error_header_modal.png']
 
 class ErrorService(IService):
-    async def ExecuteScoped(self) -> None:
-        await self.CallBack(self)
     async def CallBack() -> None:
         with async_timeout.timeout(60) :
            return await ErrorService.checkError()

@@ -1,40 +1,36 @@
 import sys
+import async_timeout
 from numpy import False_
 import pyautogui
+from IService import IService
 import config as c
 
 
-class ScreenService:
-    def __init__(self, pictureName):
-        self.pictureName = pictureName
-
-    def checkNewMap(self, waitTimer):
+class ScreenService(IService):
+    async def checkNewMap(waitTimer):
         location = pyautogui.locateOnScreen(
             c.newMapButtonImage, confidence=.8)
         if location is not None:
             pyautogui.leftClick(location)
-            pyautogui.PAUSE = 15
             while pyautogui.locateOnScreen(c.newMapButtonImage, confidence=.8) is not None:
                 pyautogui.leftClick(location)
                 pyautogui.PAUSE = waitTimer
-            return True
-        return False
-
-    def checkExist(self):
-        if self.pictureName == '':
+    async def CallBack() -> None:
+        with async_timeout.timeout(60) :
+           return await ScreenService.checkNewMap(5)
+    def checkExistScreen(image) -> bool:
+        if image == '':
             return False
-        if pyautogui.locateOnScreen(self.pictureName, confidence=.8) is not None:
+        if pyautogui.locateOnScreen(image, confidence=.8) is not None:
+            print("click true in image : " + image)
             return True
+        print("click false in image : " + image)
         return False
-
-    def checkError(self):
-        if pyautogui.locateOnScreen(c.errorButtonImage, confidence=.8) is not None:
+        
+    def checkStoppedScreen(oldScreen) -> bool:
+        if pyautogui.locateOnScreen(oldScreen, confidence=.5) is not None:
+            print("check if workers sleep : TRUE")
+            pyautogui.hotkey(c.closeTabCmd)
             return True
-        if pyautogui.locateOnScreen(c.erroCenterModal, confidence=.8) is not None:
-            return True
-        if pyautogui.locateOnScreen(c.errorHeaderModal, confidence=.8) is not None:
-            return True
+        print("check if workers sleep : FALSE")
         return False
-
-    def update(self, pictureName):
-        self.pictureName = pictureName
