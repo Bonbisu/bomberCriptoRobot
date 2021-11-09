@@ -138,9 +138,9 @@ class main:
 
                 #sleep ~1h
                 while count < 150 :
-                    print("sleeping --> ", count)
-                    time.sleep(5 + random.randrange(5,10,2))
                     Checker.Screen()
+                    print("sleeping --> ", count,)
+                    time.sleep(random.randrange(15,20,1))
                     count += 1
             print("restart : ")
             count = 0
