@@ -1,13 +1,13 @@
 import time
 import webbrowser
 import pyautogui
-from workersService import worker
-from loginService import login
+from worker import worker
+from login import login
 import config as c
 import random
 
-class ErrorChecker :
-        def ErrorChecker():
+class Checker :
+        def Screen():
             if pyautogui.locateOnScreen(c.general_erro_center_modal,confidence=.8) is not None:
                 print("general_erro_center_modal - tries = ")
                 pyautogui.click(pyautogui.locateOnScreen(c.general_error_button,confidence=.8))
@@ -39,7 +39,7 @@ class main:
         count = 0
 
         if webbrowser.open_new_tab(c.main_url) :
-                time.sleep(1)
+                time.sleep(5)
 
         print("step - 1 - Waiting click button: " + c.login_play_now_button)
 
@@ -54,8 +54,9 @@ class main:
         while True:
             print("start")
             #step - 1
-            ErrorChecker.ErrorChecker()
+            Checker.Screen()
 
+            #if is logged, back to options screen
             while pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8) is not None and count < 10 :
                 pyautogui.leftClick(pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8))
                 count += 1
@@ -67,13 +68,13 @@ class main:
                 pyautogui.keyDown('f5')
                 time.sleep(5) 
 
-            print("step - 1 - trying click button: " + c.login_play_now_button)
-            ErrorChecker.ErrorChecker()
+            Checker.Screen()
+            #click play now on home page
             while pyautogui.locateOnScreen(c.login_play_now_button, confidence = 0.7) is not None and count < 2 :
                 if pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.8) is not None :
                     break
                 count += 1
-                print("tries = " , count)
+                print("login_play_now_button tries = " , count)
 
                 while pyautogui.locateOnScreen(c.login_connect_wallet_button, confidence = 0.7) is None and count < 2 :
                     count += 1
@@ -83,19 +84,19 @@ class main:
 
             #login start
             print("login - start ->")
-            ErrorChecker.ErrorChecker()
+            Checker.Screen()
             
             while pyautogui.locateOnScreen(c.login_connect_wallet_button, confidence = 0.7) is not None  and pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.99) is None and count < 10:
-                print("tries : ", count)
+                print("login_connect_wallet_button tries : ", count)
                 count += 1
-                if login.start(count) is True:
+                if login.start() is True:
                     break
                 time.sleep(1)
             count = 0
             print("login - Done")
 
-            print("waiting heroe button ->")
-            ErrorChecker.ErrorChecker()
+            print("waiting heroes button ->")
+            Checker.Screen()
             while pyautogui.locateOnScreen(c.worker_heroes_button, confidence = 0.7) is None and count < 10:
                 count += 1
                 print("tries : ", count)
@@ -103,7 +104,7 @@ class main:
             count = 0
 
             print("choose workers - start ->")
-            ErrorChecker.ErrorChecker()
+            Checker.Screen()
             #choose workers
             if pyautogui.locateOnScreen(c.worker_heroes_button, confidence = 0.7) is not None and count < 10 :
                 pyautogui.leftClick(pyautogui.locateOnScreen(c.worker_heroes_button, confidence = 0.7))
@@ -115,12 +116,34 @@ class main:
                 else:
                     pyautogui.hotkey(c.closeTabCmd)
 
-                while count < 400 + random.randrange(100,200,2) :
+                #sleep 10 - 20 min
+                while count < 25:
                     print("sleeping --> ", count)
                     time.sleep(5 + random.randrange(5,10,2))
-                    ErrorChecker.ErrorChecker()
+                    Checker.Screen()
                     time.sleep( random.randrange(1,10,2))
                     count += 1
+                    time.sleep(5 + random.randrange(5,10,2))
+                
+                #restart screen to provente heroes not putting bomb ( bug)
+                while count < count +10 and pyautogui.locateOnScreen(c.general_back_button, confidence = 0.7):
+                    count += 1
+                    pyautogui.leftClick(pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8))
+                
+                #back to farm
+                while count < count +10 and pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.7):
+                    count += 1
+                    pyautogui.leftClick(pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.7))
+
+                #sleep ~1h
+                while count < 300 + random.randrange(30,60,2) :
+                    print("sleeping --> ", count)
+                    time.sleep(5 + random.randrange(5,10,2))
+                    Checker.Screen()
+                    time.sleep( random.randrange(1,10,2))
+                    count += 1
+                    time.sleep(5 + random.randrange(5,10,2))
+
             print("restart : ")
             count = 0
     start()
