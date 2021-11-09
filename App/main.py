@@ -56,6 +56,7 @@ class main:
             #step - 1
             Checker.Screen()
 
+            #if is logged, back to options screen
             while pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8) is not None and count < 10 :
                 pyautogui.leftClick(pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8))
                 count += 1
@@ -68,6 +69,7 @@ class main:
                 time.sleep(5) 
 
             Checker.Screen()
+            #click play now on home page
             while pyautogui.locateOnScreen(c.login_play_now_button, confidence = 0.7) is not None and count < 2 :
                 if pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.8) is not None :
                     break
