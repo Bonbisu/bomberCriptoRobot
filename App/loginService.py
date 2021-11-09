@@ -1,8 +1,5 @@
-import asyncio
 import pyautogui
 import config as c
-from retryService import tries
-import os
 import time
 
 class login:
@@ -80,11 +77,11 @@ class login:
                 if pyautogui.locateOnScreen(c.login_metamask_dark_button, confidence=.7) is None:
                     break 
 
-                if buttonsClicked:
+                if buttonsClicked :
                     print("click true in image : " + c.login_metamask_dark_button)
                     break
                 
-                if count > 20:
+                if count > 20 :
                     print("click False in image : " + c.login_metamask_dark_button + " count > " + str(count))
                     buttonsClicked =  False
                     break

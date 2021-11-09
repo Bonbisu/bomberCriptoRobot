@@ -1,10 +1,7 @@
-import webbrowser
 import pyautogui
-from mouseEvents import ClickService
-from screenEvents import ScreenService
 import config as c
 import time
-import random
+import datetime
 
 class worker:
 
@@ -27,44 +24,36 @@ class worker:
                 time.sleep(1)                    
             
             print("click " + str(count) + " in image : " + c.worker_heroes_button)
-           
-            lastLocation = 0
-            
-            location = pyautogui.locateAllOnScreen(c.worker_button, confidence=.7)
-            count = location.__sizeof__()
-
-            for l in location:
-                count -= 1
-                if lastLocation <= 0 or lastLocation < l.top  :
-                    lastLocation = l.top + 25
-                    print("location selected ", l) 
-                    time.sleep(2)
-                    pyautogui.leftClick(l)
-                    time.sleep(2)
-                    pyautogui.leftClick(l)
-            
-            lastLocation = 0
-            
-            while count < 50 :
-                count += 1
-                pyautogui.scroll(-15)
-                time.sleep(1)
-
-            location = pyautogui.locateAllOnScreen(c.worker_button, confidence=.95)
-
-            for l in location:
-                count -= 1
-
-                if lastLocation <= 0 or lastLocation < l.top  :
-                    lastLocation = l.top + 25
-                    print("location selected ", l) 
-                    time.sleep(2)
-                    pyautogui.leftClick(l)
-                    time.sleep(2)
-                    pyautogui.leftClick(l)
-
             count = 0
-            time.sleep(10)                    
+            while count < 2 :
+                
+                count += 1
+                lastLocation = 0
+                location = pyautogui.locateAllOnScreen(c.worker_button, confidence=.7)
+                
+                for l in location:
+                    
+                    if(pyautogui.locateAllOnScreen(c.worker_button,confidence=.7) is None ):
+                        break
+                    
+                    if lastLocation <= 0 or lastLocation < l.top  :
+                        lastLocation = l.top + 25
+                        print("location selected ", l) 
+                        time.sleep(0.5)
+                        pyautogui.leftClick(l)
+                        time.sleep(0.5)
+                        pyautogui.leftClick(l)
+                        time.sleep(0.5)
+                lastLocation = 0
+                
+                for i in range(0,9):
+                    pyautogui.leftClick()
+                                
+                    pyautogui.scroll(-15)
+                    pyautogui.scroll(-15)
+
+                    time.sleep(0.5)
+            count = 0
 
             print("End Worker Select Process") 
             
@@ -74,7 +63,7 @@ class worker:
                 count += 1
                 time.sleep(1)
             count = 0
-            time.sleep(10)
+            time.sleep(1)
             
             while pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence=.7) is not None and count < 10:
                 pyautogui.leftClick(pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence=.7))
@@ -82,12 +71,12 @@ class worker:
                 time.sleep(1)
             count = 0
 
-            time.sleep(10)
+            time.sleep(1)
 
             print("Farm Start! ")
-            time.sleep(5)
+            time.sleep(1)
 
-            pyautogui.screenshot("App\\assets\\save_screen_shot.png")
+            pyautogui.screenshot(c.imagePath + str(datetime.date(2021,11,9)) + "_log.png")
             
             return True
-    # findWorkers() # < teste
+   # findWorkers() # < teste
