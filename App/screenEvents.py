@@ -15,9 +15,11 @@ class ScreenService(IService):
             while pyautogui.locateOnScreen(c.newMapButtonImage, confidence=.8) is not None:
                 pyautogui.leftClick(location)
                 pyautogui.PAUSE = waitTimer
+
     async def CallBack() -> None:
         with async_timeout.timeout(60) :
            return await ScreenService.checkNewMap(5)
+
     def checkExistScreen(image) -> bool:
         if image == '':
             return False
@@ -28,9 +30,8 @@ class ScreenService(IService):
         return False
         
     def checkStoppedScreen(oldScreen) -> bool:
-        if pyautogui.locateOnScreen(oldScreen, confidence=.5) is not None:
+        if pyautogui.locateOnScreen(oldScreen, confidence=.8) is not None:
             print("check if workers sleep : TRUE")
-            pyautogui.hotkey(c.closeTabCmd)
             return True
         print("check if workers sleep : FALSE")
         return False

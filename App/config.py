@@ -1,6 +1,6 @@
 
 # closeTabCmd = ['cmd', 'w']  # for mac, try change to cmd
-closeTabCmd = ['ctrl', 'w']  # for mac, try change to cmd
+closeTabCmd = ('ctrl' + 'w')  # for mac, try change to cmd
 imagePath = 'App\\assets\\'  # change your image directory path, if you need
 
 general_close_button = imagePath + 'close_button.png'
@@ -8,6 +8,7 @@ general_error_button = imagePath + 'error_ok_modal.png'
 general_new_map_button = imagePath + 'new_map_button.png'
 general_erro_center_modal = imagePath + 'error_center_modal.png'
 general_error_header_modal = imagePath + 'error_header_modal.png'
+general_back_button = imagePath + 'error_header_modal.png'
 
 worker_heroes_button = imagePath + 'heroes.png'
 worker_button = imagePath + 'work_button.png'

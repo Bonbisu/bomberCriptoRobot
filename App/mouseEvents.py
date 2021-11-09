@@ -11,8 +11,10 @@ class ClickService:
         if location is None:
             return False
         time.sleep(3)
+        
         pyautogui.leftClick(location)
         time.sleep(3)
+    
         pyautogui.leftClick(location)        
         time.sleep(3)
         return True

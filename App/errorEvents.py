@@ -20,7 +20,6 @@ class ErrorService(IService):
                 await ErrorService.errorThreat(pyautogui.locateOnScreen(button,confidence=.8))
         time.sleep(1)
     async def errorThreat(self,location):
-        self.CallBack(self)
         return pyautogui.click(location)    
 
 

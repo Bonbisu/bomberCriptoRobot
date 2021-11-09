@@ -11,15 +11,15 @@ class tries:
             print("Step : Retry - ", retries)
             print("Step : Image - ", imgAddress)
             return False
-        else:
-            while retries <= 10 and ScreenService.checkExistScreen(imgAddress):
+        else :
+            while retries <= 10 and ScreenService.checkExistScreen(imgAddress) :
                 print("Step : forcing click ", retries)
-                time.sleep(.2)
-                if ClickService.executeOnscreen(pyautogui.locateOnScreen(imgAddress, confidence = .7)) is not False:
+                time.sleep(1)
+                if ClickService.executeOnscreen(pyautogui.locateOnScreen(imgAddress, confidence = .7)) is True :
                     print("Click Sucessful ", imgAddress)
                     break
                 print("Tries ", retries)
                 print("Image Not Found  " + imgAddress)
                 retries += 1
-                time.sleep(.2)
+                time.sleep(1)
         return True

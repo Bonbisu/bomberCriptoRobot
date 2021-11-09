@@ -5,60 +5,89 @@ from screenEvents import ScreenService
 import config as c
 import time
 import random
-from retryService import tries
-
 
 class worker:
+
     def findWorkers() -> bool:
+            
             print("START Worker Select Process => ") 
             count = 0
-            time.sleep(5)
-            while pyautogui.locateAllOnScreen(c.worker_button,confidence=.9) is None and pyautogui.locateOnScreen(c.worker_heroes_button,confidence=.9) is not None:
-                if tries.execute(count, c.worker_heroes_button) is False:
+            time.sleep(1)
+            
+            while pyautogui.locateAllOnScreen(c.worker_button,confidence=.7) is None and pyautogui.locateOnScreen(c.worker_heroes_button,confidence=.7) is not None and count < 10:
+            
+                if pyautogui.leftClick(c.worker_stamina_bar,confidence=.7) is False :
                     count += 1
                     pyautogui.scroll(-5)
-                    time.sleep(3)
-                    if count > 100:
-                        print("click fail in image : " + c.worker_heroes_button)            
-                        return False
-                    if pyautogui.locateAllOnScreen(c.worker_stamina_bar,confidence=.9) is not None:
+                    time.sleep(1)
+            
+                    if pyautogui.locateAllOnScreen(c.worker_button,confidence=.7) is not None:
                         break
-                time.sleep(5)                    
+            
+                time.sleep(1)                    
+            
             print("click " + str(count) + " in image : " + c.worker_heroes_button)
-            count = 0
+           
+            lastLocation = 0
             
-            for l in pyautogui.locateAllOnScreen(c.worker_stamina_bar,confidence=.9):
-                if count > 2 :
-                    print("3 heroes selected ") 
-                    count = 0
-                    break
-                time.sleep(2)
-                newLocation = pyautogui.locateOnScreen(c.worker_button, c.worker_stamina_bar, confidence=.9)
-                pyautogui.leftClick(newLocation)
-                time.sleep(2)
-                pyautogui.leftClick(newLocation)
-                time.sleep(2)
-                if newLocation.__len__() > 2 :
-                    count += 1                
-            
+            location = pyautogui.locateAllOnScreen(c.worker_button, confidence=.7)
+            count = location.__sizeof__()
 
-            if pyautogui.locateOnScreen(c.general_close_button) is not None:
-                count = 0
-                tries.execute(count, c.general_close_button)
+            for l in location:
+                count -= 1
+                if lastLocation <= 0 or lastLocation < l.top  :
+                    lastLocation = l.top + 25
+                    print("location selected ", l) 
+                    time.sleep(2)
+                    pyautogui.leftClick(l)
+                    time.sleep(2)
+                    pyautogui.leftClick(l)
+            
+            lastLocation = 0
+            
+            while count < 50 :
+                count += 1
+                pyautogui.scroll(-15)
+                time.sleep(1)
+
+            location = pyautogui.locateAllOnScreen(c.worker_button, confidence=.95)
+
+            for l in location:
+                count -= 1
+
+                if lastLocation <= 0 or lastLocation < l.top  :
+                    lastLocation = l.top + 25
+                    print("location selected ", l) 
+                    time.sleep(2)
+                    pyautogui.leftClick(l)
+                    time.sleep(2)
+                    pyautogui.leftClick(l)
+
+            count = 0
+            time.sleep(10)                    
 
             print("End Worker Select Process") 
-            while pyautogui.locateOnScreen(c.start_farm_treasure_image) is None and count < 100:
+            
+            while pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence=.7) is None and count < 10:
+                pyautogui.leftClick(pyautogui.locateOnScreen(c.general_close_button, confidence=.7))
                 print("Trying start the farm") 
                 count += 1
-                pass
+                time.sleep(1)
             count = 0
-            
-            while tries.execute(count, c.start_farm_treasure_image) is False :
-                count += 1
-                if count > 100 :
-                    break
-                pass
-            print("Farm Start! ")
             time.sleep(10)
-            return count <= 0
+            
+            while pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence=.7) is not None and count < 10:
+                pyautogui.leftClick(pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence=.7))
+                count += 1
+                time.sleep(1)
+            count = 0
+
+            time.sleep(10)
+
+            print("Farm Start! ")
+            time.sleep(5)
+
+            pyautogui.screenshot("App\\assets\\save_screen_shot.png")
+            
+            return True
     # findWorkers() # < teste
