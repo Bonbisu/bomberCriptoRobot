@@ -1,10 +1,29 @@
 
-closeTabCmd = ['cmd', 'w']  # for mac, try change to cmd
-imagePath = 'assets/'  # change your image directory path, if you need
-images = ['play_now.png', 'connect_wallet.png', 'metamask_button.png', 'assinar.png',
-          'heroes.png', 'work_button.png', 'close_button.png', 'treasure_hunt.png']
-imageAddresses = [imagePath + i for i in images]
-errorButtonImage = imagePath + 'error_ok_modal.png'
-newMapButtonImage = imagePath + 'new_map_button.png'
-erroCenterModal = imagePath + 'error_center_modal.png'
-errorHeaderModal = imagePath + 'error_header_modal.png'
+# closeTabCmd = ['cmd', 'w']  # for mac, try change to cmd
+closeTabCmd = ['ctrl','w'] # for mac, try change to cmd
+imagePath = 'App\\assets\\'  # change your image directory path, if you need
+
+general_close_button = imagePath + 'close_button.png'
+general_error_button = imagePath + 'error_ok_modal.png'
+general_new_map_button = imagePath + 'new_map_button.png'
+general_new_map_cartoon = imagePath + 'new_map_cartoon.png'
+general_erro_center_modal = imagePath + 'error_center_modal.png'
+general_error_header_modal = imagePath + 'error_header_modal.png'
+general_back_button = imagePath + 'general_step_back.png'
+
+worker_heroes_button = imagePath + 'heroes.png'
+worker_button = imagePath + 'work_button.png'
+worker_stamina_bar = imagePath + 'work_parcial_bar.png'
+
+
+login_play_now_button = imagePath + 'play_now.png'
+login_connect_wallet_button = imagePath + 'connect_wallet.png'
+login_assinar_button = imagePath + 'assinar.png'
+login_metamask_light_button = imagePath + 'metamask_button.png'
+login_metamask_dark_button = imagePath + 'metamask_dark.png'
+
+start_farm_treasure_image = imagePath + 'treasure_hunt.png'
+static_screen_test = imagePath + 'static_screen_test.png'
+
+main_url = "https://bombcrypto.io/"
+
