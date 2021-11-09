@@ -43,11 +43,11 @@ class main:
 
         print("step - 1 - Waiting click button: " + c.login_play_now_button)
 
-        while pyautogui.locateOnScreen(c.login_play_now_button, confidence = 0.7) is None and count < 10 :
+        while pyautogui.locateOnScreen(c.login_play_now_button, confidence = 0.9) is None and count < 10 :
             print("login_play_now_button - tries = ", count)
             count += 1
             time.sleep(5)        
-            if pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8) is not None :
+            if pyautogui.locateOnScreen(c.general_back_button, confidence = 0.99) is not None :
                 break
         count = 0
 
@@ -57,26 +57,27 @@ class main:
             Checker.Screen()
 
             #if is logged, back to options screen
-            while pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8) is not None and count < 10 :
+            while pyautogui.locateOnScreen(c.general_back_button, confidence = 0.99) is not None and count < 10 :
                 pyautogui.leftClick(pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8))
                 count += 1
                 print("general_back_button - tries = ", count)
                 time.sleep(0.5)        
             count += 1
 
-            if pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8):
+            if pyautogui.locateOnScreen(c.general_back_button, confidence = 0.99):
                 pyautogui.keyDown('f5')
                 time.sleep(5) 
 
             Checker.Screen()
             #click play now on home page
             while pyautogui.locateOnScreen(c.login_play_now_button, confidence = 0.7) is not None and count < 2 :
+                pyautogui.leftClick(pyautogui.locateOnScreen(c.login_play_now_button))
                 if pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.8) is not None :
                     break
                 count += 1
                 print("login_play_now_button tries = " , count)
 
-                while pyautogui.locateOnScreen(c.login_connect_wallet_button, confidence = 0.7) is None and count < 2 :
+                while pyautogui.locateOnScreen(c.login_connect_wallet_button, confidence = 0.99) is None and count < 2 :
                     count += 1
                     pyautogui.leftClick(pyautogui.locateOnScreen(c.login_play_now_button))
                 time.sleep(1)        
@@ -136,14 +137,11 @@ class main:
                     pyautogui.leftClick(pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.7))
 
                 #sleep ~1h
-                while count < 300 + random.randrange(30,60,2) :
-                    print("sleeping --> ", count)
-                    time.sleep(5 + random.randrange(5,10,2))
+                while count < 150 :
                     Checker.Screen()
-                    time.sleep( random.randrange(1,10,2))
+                    print("sleeping --> ", count,)
+                    time.sleep(random.randrange(15,20,1))
                     count += 1
-                    time.sleep(5 + random.randrange(5,10,2))
-
             print("restart : ")
             count = 0
     start()
