@@ -114,12 +114,34 @@ class main:
                 else:
                     pyautogui.hotkey(c.closeTabCmd)
 
-                while count < 400 + random.randrange(100,200,2) :
+                #sleep 10 - 20 min
+                while count < 25:
                     print("sleeping --> ", count)
                     time.sleep(5 + random.randrange(5,10,2))
                     Checker.Screen()
                     time.sleep( random.randrange(1,10,2))
                     count += 1
+                    time.sleep(5 + random.randrange(5,10,2))
+                
+                #restart screen to provente heroes not putting bomb ( bug)
+                while count < count +10 and pyautogui.locateOnScreen(c.general_back_button, confidence = 0.7):
+                    count += 1
+                    pyautogui.leftClick(pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8))
+                
+                #back to farm
+                while count < count +10 and pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.7):
+                    count += 1
+                    pyautogui.leftClick(pyautogui.locateOnScreen(c.start_farm_treasure_image, confidence = 0.7))
+
+                #sleep ~1h
+                while count < 300 + random.randrange(30,60,2) :
+                    print("sleeping --> ", count)
+                    time.sleep(5 + random.randrange(5,10,2))
+                    Checker.Screen()
+                    time.sleep( random.randrange(1,10,2))
+                    count += 1
+                    time.sleep(5 + random.randrange(5,10,2))
+
             print("restart : ")
             count = 0
     start()
