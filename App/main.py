@@ -1,8 +1,8 @@
 import time
 import webbrowser
 import pyautogui
-from workersService import worker
-from loginService import login
+from worker import worker
+from login import login
 import config as c
 import random
 
