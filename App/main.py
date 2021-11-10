@@ -57,14 +57,14 @@ class main:
             Checker.Screen()
 
             #if is logged, back to options screen
-            while pyautogui.locateOnScreen(c.general_back_button, confidence = 0.99) is not None and count < 10 :
+            while pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8) is not None and count < 10 :
                 pyautogui.leftClick(pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8))
                 count += 1
                 print("general_back_button - tries = ", count)
                 time.sleep(0.5)        
             count += 1
 
-            if pyautogui.locateOnScreen(c.general_back_button, confidence = 0.99):
+            if pyautogui.locateOnScreen(c.general_back_button, confidence = 0.8):
                 pyautogui.keyDown('f5')
                 time.sleep(5) 
 
